@@ -27,7 +27,7 @@ export default {
     axios: {
       baseURL: 'https://api.nuxtjs.dev',
     },
-    myPublicVariable: process.env.PUBLIC_VARIABLE,
+    apiKey: process.env.API_KEY,
   },
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -40,8 +40,7 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [
-  ],
+  modules: ['@nuxtjs/axios'],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
