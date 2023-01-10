@@ -1,3 +1,3 @@
 export default () => ({
-  single: {},
+  single: null,
 });
