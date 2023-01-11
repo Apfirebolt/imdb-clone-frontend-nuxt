@@ -25,7 +25,7 @@ export default {
 
   publicRuntimeConfig: {
     axios: {
-      baseURL: 'https://api.nuxtjs.dev',
+      baseURL: 'http://localhost:5000/api/',
     },
     apiKey: process.env.API_KEY,
   },

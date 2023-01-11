@@ -1,6 +1,6 @@
 // /store/mutations.js
 export default {
-  setMovie(state, val) {
+  setToken(state, val) {
     state.token = val;
     state.isAuthenticated = true;
   },

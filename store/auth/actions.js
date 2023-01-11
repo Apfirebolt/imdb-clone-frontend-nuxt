@@ -1,3 +1,5 @@
+import axios from '@nuxtjs/axios'
+
 export default {
   getMovieAction({ commit }, payload) {
     commit("setMovie", payload);
@@ -11,15 +13,15 @@ export default {
       .catch((err) => {});
   },
 
-  setTokenAction: ({ commit }, payload) => {
-    const url = "api/users/login";
-    axios
+  setTokenAction: function ({ commit }, payload) {
+    const url = "auth/login";
+    this.$axios
       .post(url, payload)
       .then((response) => {
-        commit(types.SET_TOKEN, response.data.token);
+        commit("setToken", response.data.token);
         localStorage.setItem("Token", response.data.token);
         localStorage.setItem("userId", response.data._id);
-        router.push({ name: "Dashboard" });
+        this.$router.push({ name: "movie" });
       })
       .catch((err) => {
         console.log(err);
