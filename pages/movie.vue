@@ -1,6 +1,9 @@
 <template>
   <div>
     <div class="mx-auto bg-blue-700 max-w-7xl lg:px-8">
+      <t-modal v-model="isAddToPlaylistModalOpened" header="Add To Playlist">
+        <play-list-modal @onConfirmAction="deleteMovie" v-if="playlist" :playlist="playlist" />
+      </t-modal>
       <t-modal v-model="isConfirmModalOpened" header="Confirm Delete Modal">
         <confirm-modal @onConfirmAction="deleteMovie" :message="deleteMessage" />
       </t-modal>
@@ -25,14 +28,6 @@
             </p>
             <div class="mt-8">
               <div class="inline-flex rounded-md shadow">
-                <button class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-gray-900 bg-white hover:bg-gray-50">
-                  Add To Watch List
-                  <!-- Heroicon name: solid/external-link -->
-                  <svg class="-mr-1 ml-3 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
-                    <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
-                  </svg>
-                </button>
                 <button @click="saveMovieUtil()" class="inline-flex items-center ml-3 justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-gray-900 bg-white hover:bg-gray-50">
                   Save Movie
                   <!-- Heroicon name: solid/external-link -->
@@ -139,7 +134,7 @@
               <t-button variant="error" @click="deleteMovieUtil(movie)">
                 Delete
               </t-button>
-              <t-button @click="deleteMovieUtil(movie)">
+              <t-button @click="addToPlaylistUtil(movie)">
                 Add To Playlist
               </t-button>
             </div>
@@ -153,11 +148,10 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import Footer from "../components/Footer.vue";
-import Header from "../components/Header.vue";
+import PlayListModal from '../components/PlayListModal.vue';
 
 export default {
-  components: { Footer },
+  components: { PlayListModal },
   name: "Movie",
   mounted() {
     this.getAllMovies()
@@ -165,7 +159,8 @@ export default {
   computed: {
     ...mapGetters({
       singleMovie: "movie/movieGetter",
-      movies: "movie/getAllMovies"
+      movies: "movie/getAllMovies",
+      playlist: "watchlist/getAllPlayList",
     }),
   },
   data() {
@@ -174,7 +169,8 @@ export default {
       searchText: '',
       deleteMessage: '',
       selectedMovie: null,
-      isConfirmModalOpened: false
+      isConfirmModalOpened: false,
+      isAddToPlaylistModalOpened: false
     };
   },
   methods: {
@@ -182,7 +178,8 @@ export default {
       getMovieAction: "movie/getMovieAction",
       getAllMovies: "movie/getAllMoviesAction",
       saveMovieAction: "movie/saveMovieAction",
-      deleteMovieAction: "movie/deleteMovieAction"
+      deleteMovieAction: "movie/deleteMovieAction",
+      getAllPlaylistAction: "watchlist/getAllPlaylistAction",
     }),
     async movieApiCall() {
       let apiKey = this.$config.apiKey;
@@ -225,6 +222,11 @@ export default {
     deleteMovie() {
       this.deleteMovieAction(this.selectedMovie)
       this.isConfirmModalOpened = false
+    },
+    addToPlaylistUtil(movie) {
+      console.log('Movie is ', movie)
+      this.getAllPlaylistAction()
+      this.isAddToPlaylistModalOpened = true
     }
   },
 };
