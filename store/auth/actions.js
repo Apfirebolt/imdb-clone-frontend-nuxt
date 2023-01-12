@@ -18,6 +18,7 @@ export default {
     this.$axios
       .post(url, payload)
       .then((response) => {
+        console.log('Response is ', response)
         commit("setToken", response.data.token);
         localStorage.setItem("Token", response.data.token);
         localStorage.setItem("userId", response.data._id);

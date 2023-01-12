@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Header />
     <div class="mx-auto bg-blue-700 max-w-7xl lg:px-8">
       <div v-if="singleMovie" class="relative bg-gray-900">
         <div class="relative h-56 bg-indigo-600 sm:h-72 md:absolute md:left-0 md:h-full md:w-1/2">
@@ -94,7 +93,6 @@
         </div>
       </div>
     </div>
-    <Footer />
   </div>
 </template>
 

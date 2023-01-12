@@ -1,10 +1,3 @@
-const config = {
-  headers: {
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${userInfo.token}`,
-  },
-}
-
 export default {
   getMovieAction({ commit }, payload) {
     commit("setMovie", payload);
@@ -12,8 +5,15 @@ export default {
 
   addWatchList: function ({ commit }, payload) {
     const url = 'playlist'
+    let token = localStorage.getItem("Token");
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    }
     this.$axios
-      .post(url, payload)
+      .post(url, payload, config)
       .then((response) => {
         console.log('Response is ', response)
       })
@@ -22,22 +22,36 @@ export default {
 
   getAllPlaylistAction: function ({ commit }) {
     const url = "playlist";
+    let token = localStorage.getItem("Token");
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    }
     this.$axios
-      .get(url)
+      .get(url, config)
       .then((response) => {
-        commit("setPlaylists", response);
+        commit("setPlaylists", response.data);
       })
       .catch((err) => {
         console.error(err);
       });
   },
 
-  getSinglePlaylistAction: function ({ commit }) {
-    const url = "users/profile";
+  deleteSinglePlaylistAction: function ({ commit }, payload) {
+    const url = `playlist/${payload._id}`;
+    let token = localStorage.getItem("Token");
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    }
     this.$axios
-      .get(url)
+      .delete(url, config)
       .then((response) => {
-        commit("setSinglePlaylist", response);
+        console.log('Deleted')
       })
       .catch((err) => {
         console.error(err);
