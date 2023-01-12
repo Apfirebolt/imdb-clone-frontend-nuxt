@@ -2,7 +2,10 @@
   <div class="py-12 text-center px-4 sm:px-6 lg:px-8">
     <p class="text-center text-3xl text-red-500">Add Watchlist Page</p>
     <t-modal v-model="isWatchListModalOpened" header="Create Watchlist">
-      <AddEditWatchlist :addPlaylist="addNewPlaylist" />
+      <AddEditWatchlist :addPlaylist="addNewPlaylist"/>
+    </t-modal>
+    <t-modal v-model="isWatchListEditModalOpened" header="Update Watchlist">
+      <AddEditWatchlist :updatePlaylist="updatePlaylist" :selectedPlaylist="selectedWatchlist" />
     </t-modal>
     <t-modal v-model="isConfirmModalOpened" header="Confirm Delete Modal">
       <confirm-modal @onConfirmAction="deletePlaylist" :message="deleteMessage" />
@@ -36,8 +39,8 @@
             Here are the biggest enterprise technology acquisitions of 2021 so
             far, in reverse chronological order.
           </p>
-          <a
-            href="#"
+          <button
+            @click="editPlaylistUtil(item)"
             class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             Read more
@@ -54,7 +57,7 @@
                 clip-rule="evenodd"
               ></path>
             </svg>
-          </a>
+          </button>
           <t-button variant="error" @click="deletePlaylistUtil(item)"> Delete </t-button>
         </div>
       </div>
@@ -75,8 +78,10 @@ export default {
     return {
       isWatchListModalOpened: false,
       isConfirmModalOpened: false,
+      isWatchListEditModalOpened: false,
       selectedWatchlist: {},
       deleteMessage: '',
+      mode: 'add'
     };
   },
   computed: {
@@ -89,7 +94,8 @@ export default {
     ...mapActions({
       addNewPlayListAction: "watchlist/addWatchList",
       getAllPlaylistAction: "watchlist/getAllPlaylistAction",
-      deletePlaylistAction: "watchlist/deleteSinglePlaylistAction"
+      deletePlaylistAction: "watchlist/deleteSinglePlaylistAction",
+      updatePlaylistAction: "watchlist/updateSinglePlaylistAction"
     }),
     toggleModal() {
       this.isWatchListModalOpened = !this.isWatchListModalOpened;
@@ -102,11 +108,21 @@ export default {
       this.selectedWatchlist = item
       this.isConfirmModalOpened = true
       this.deleteMessage = `Are you sure you want to delete item titled ${item.title} ?`
-      console.log(this.selectedWatchlist)
     },
     deletePlaylist() {
       console.log('Playlist')
       this.deletePlaylistAction(this.selectedWatchlist)
+      this.isConfirmModalOpened = false
+    },
+    editPlaylistUtil(item) {
+      this.selectedWatchlist = item
+      this.isWatchListEditModalOpened = true
+    },
+    updatePlaylist(data) {
+      console.log('Data is ', data)
+      data._id = this.selectedWatchlist._id
+      this.updatePlaylistAction(data)
+      this.isWatchListEditModalOpened = false
     }
   },
 };

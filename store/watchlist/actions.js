@@ -3,7 +3,7 @@ export default {
     commit("setMovie", payload);
   },
 
-  addWatchList: function ({ commit }, payload) {
+  addWatchList: function ({ commit, dispatch }, payload) {
     const url = 'playlist'
     let token = localStorage.getItem("Token");
     const config = {
@@ -15,7 +15,7 @@ export default {
     this.$axios
       .post(url, payload, config)
       .then((response) => {
-        console.log('Response is ', response)
+        dispatch('getAllPlaylistAction')
       })
       .catch((err) => {});
   },
@@ -39,7 +39,7 @@ export default {
       });
   },
 
-  deleteSinglePlaylistAction: function ({ commit }, payload) {
+  deleteSinglePlaylistAction: function ({ commit, dispatch }, payload) {
     const url = `playlist/${payload._id}`;
     let token = localStorage.getItem("Token");
     const config = {
@@ -51,7 +51,26 @@ export default {
     this.$axios
       .delete(url, config)
       .then((response) => {
-        console.log('Deleted')
+        dispatch('getAllPlaylistAction')
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  },
+
+  updateSinglePlaylistAction: function ({ commit, dispatch }, payload) {
+    const url = `playlist/${payload._id}`;
+    let token = localStorage.getItem("Token");
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    }
+    this.$axios
+      .put(url, payload, config)
+      .then((response) => {
+        dispatch('getAllPlaylistAction')
       })
       .catch((err) => {
         console.error(err);

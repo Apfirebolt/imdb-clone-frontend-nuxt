@@ -4,7 +4,7 @@
       <div>
         <img class="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="Workflow" />
         <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Add Watchlist
+          {{ selectedPlaylist ? 'Update' : 'Add' }} Watchlist
         </h2>
       </div>
       <form  @submit.prevent="addPlaylistUtil" class="mt-8 space-y-6" method="POST">
@@ -18,7 +18,7 @@
 
         <div>
           <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            Add
+            {{ this.selectedPlaylist ? 'Edit Playlist' : 'Add Playlist' }}
           </button>
         </div>
       </form>
@@ -33,7 +33,20 @@ export default {
   props: {
     addPlaylist: {
       type: Function,
-      required: true
+      required: false
+    },
+    updatePlaylist: {
+      type: Function,
+      required: false
+    },
+    selectedPlaylist: {
+      type: Object,
+      required: false,
+    },
+  },
+  mounted() {
+    if(this.selectedPlaylist) {
+      this.name = this.selectedPlaylist.title
     }
   },
   data() {
@@ -46,7 +59,11 @@ export default {
       let data = {
         title: this.name
       }
-      this.addPlaylist(data)
+      if (this.selectedPlaylist) {
+        this.updatePlaylist(data)
+      } else {
+        this.addPlaylist(data)
+      }
     }
   }
 }
