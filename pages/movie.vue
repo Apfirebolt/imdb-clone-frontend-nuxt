@@ -2,7 +2,7 @@
   <div>
     <div class="mx-auto bg-blue-700 max-w-7xl lg:px-8">
       <t-modal v-model="isAddToPlaylistModalOpened" header="Add To Playlist">
-        <play-list-modal @onConfirmAction="deleteMovie" v-if="playlist" :playlist="playlist" />
+        <play-list-modal @onConfirmAction="addToPlaylist" v-if="playlist" :playlist="playlist" />
       </t-modal>
       <t-modal v-model="isConfirmModalOpened" header="Confirm Delete Modal">
         <confirm-modal @onConfirmAction="deleteMovie" :message="deleteMessage" />
@@ -180,6 +180,7 @@ export default {
       saveMovieAction: "movie/saveMovieAction",
       deleteMovieAction: "movie/deleteMovieAction",
       getAllPlaylistAction: "watchlist/getAllPlaylistAction",
+      addMovieToPlaylistAction: "watchlist/addMovieToWatchlist"
     }),
     async movieApiCall() {
       let apiKey = this.$config.apiKey;
@@ -226,7 +227,16 @@ export default {
     addToPlaylistUtil(movie) {
       console.log('Movie is ', movie)
       this.getAllPlaylistAction()
+      this.selectedMovie = movie
       this.isAddToPlaylistModalOpened = true
+    },
+    addToPlaylist(playlistId) {
+      let payload = {
+        playlistId,
+        movie: this.selectedMovie
+      }
+      this.addMovieToPlaylistAction(payload)
+      this.isAddToPlaylistModalOpened = false
     }
   },
 };

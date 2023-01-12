@@ -68,7 +68,7 @@ export default {
   },
   methods: {
     addPlaylistUtil() {
-      console.log('Inside add playlist util..')
+      this.$emit('onConfirmAction', this.selectedPlaylist);
     },
   },
 };

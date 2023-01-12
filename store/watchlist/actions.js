@@ -76,4 +76,23 @@ export default {
         console.error(err);
       });
   },
+
+  addMovieToWatchlist: function ({ commit, dispatch }, payload) {
+    const url = `playlist/${payload.playlistId}/add-movie`;
+    let token = localStorage.getItem("Token");
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    }
+    this.$axios
+      .patch(url, payload, config)
+      .then((response) => {
+        dispatch('getAllPlaylistAction')
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  },
 };
