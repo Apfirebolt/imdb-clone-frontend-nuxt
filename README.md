@@ -13,6 +13,12 @@ I wanted to learn more about server side rendering and Nuxt JS. I went through d
 
 The contents for the READ ME below come from default Nuxt JS project. The project has been bootstrapped using create-nuxt-app CLI tool.
 
+## Features
+
+- User can search for a movie on IMDB and save the movie.
+- Saved movies would be displayed on the dashboard of the user, users can then add saved movies to watchlist.
+- CRUD on watchlist
+
 ## Build Setup
 
 ```bash

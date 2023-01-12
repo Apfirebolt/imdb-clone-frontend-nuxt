@@ -35,9 +35,16 @@
               {{ item.title }}
             </h5>
           </a>
-          <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
-            Here are the biggest enterprise technology acquisitions of 2021 so
-            far, in reverse chronological order.
+          <div v-if="item.movies.length > 0" class="text-lg my-2">
+            <p class="my-2">
+              Movies in this playlist
+            </p>
+            <p v-for="movie in item.movies" :id="movie._id" class="mb-3 p-2 rounded font-normal text-gray-700 bg-red-200 shadow-md dark:text-gray-400">
+              {{ movie.title }}
+            </p>
+          </div>
+          <p class="my-3" v-else>
+            No movies added to this playlist
           </p>
           <button
             @click="editPlaylistUtil(item)"
