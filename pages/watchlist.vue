@@ -110,7 +110,6 @@ export default {
       this.deleteMessage = `Are you sure you want to delete item titled ${item.title} ?`
     },
     deletePlaylist() {
-      console.log('Playlist')
       this.deletePlaylistAction(this.selectedWatchlist)
       this.isConfirmModalOpened = false
     },
@@ -119,7 +118,6 @@ export default {
       this.isWatchListEditModalOpened = true
     },
     updatePlaylist(data) {
-      console.log('Data is ', data)
       data._id = this.selectedWatchlist._id
       this.updatePlaylistAction(data)
       this.isWatchListEditModalOpened = false
