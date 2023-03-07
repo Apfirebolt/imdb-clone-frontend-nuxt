@@ -1,13 +1,8 @@
-import axios from '@nuxtjs/axios'
-
 export default {
-  getMovieAction({ commit }, payload) {
-    commit("setMovie", payload);
-  },
-
-  registerUser: ({ commit }, payload) => {
-    const url = `${process.env.VUE_APP_ROOT_API}accounts/api/register`;
-    axios
+  
+  registerUser: function ({ commit }, payload) {
+    const url = "auth/register";
+    this.$axios
       .post(url, payload)
       .then((response) => {})
       .catch((err) => {});
@@ -18,7 +13,6 @@ export default {
     this.$axios
       .post(url, payload)
       .then((response) => {
-        console.log('Response is ', response)
         commit("setToken", response.data.token);
         localStorage.setItem("Token", response.data.token);
         localStorage.setItem("userId", response.data._id);

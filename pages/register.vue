@@ -7,20 +7,24 @@
           Create a new account
         </h2>
       </div>
-      <form class="mt-8 space-y-6" action="#" method="POST">
+      <form @submit.prevent="registerUtil" class="mt-8 space-y-6" action="#" method="POST">
         <input type="hidden" name="remember" value="true" />
         <div class="rounded-md shadow-sm -space-y-px">
           <div>
             <label for="email-address" class="sr-only">Email address</label>
-            <input id="email-address" name="email" type="email" autocomplete="email" required="" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email address" />
+            <input id="email-address" v-model="formData.email" name="email" type="email" autocomplete="email" required="" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email address" />
           </div>
           <div>
-            <label for="username" class="sr-only">Username</label>
-            <input id="username" name="username" type="text" autocomplete="username" required="" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Username" />
+            <label for="firstName" class="sr-only">First Name</label>
+            <input id="firstName" v-model="formData.firstName" name="firstName" type="text" required="" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="First Name" />
+          </div>
+          <div>
+            <label for="lastName" class="sr-only">Last Name</label>
+            <input id="lastName" v-model="formData.lastName" name="lastName" type="text" required="" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Last Name" />
           </div>
           <div>
             <label for="password" class="sr-only">Password</label>
-            <input id="password" name="password" type="password" autocomplete="current-password" required="" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password" />
+            <input id="password" v-model="formData.password" name="password" type="password" autocomplete="current-password" required="" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password" />
           </div>
         </div>
 
@@ -38,8 +42,31 @@
 </template>
 
 <script>
-
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: 'Register',
+  data() {
+    return {
+      formData: {
+        email: '',
+        firstName: '',
+        lastName: '',
+        password: '' 
+      }
+    }
+  },
+  computed: {
+    ...mapGetters({
+      getToken: "auth/getToken"
+    })
+  },
+  methods: {
+    ...mapActions({
+      registerAction: "auth/registerUser"
+    }),
+    registerUtil() {
+      this.registerAction(this.formData)
+    }
+  }
 }
 </script>

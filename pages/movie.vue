@@ -187,7 +187,6 @@ export default {
       const movieData = await this.$axios.$get(
         `http://www.omdbapi.com/?t=${this.searchText}&apikey=${apiKey}`
       );
-      console.log(movieData);
       this.getMovieAction(movieData);
     },
     toggleDropdown() {

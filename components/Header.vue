@@ -261,7 +261,7 @@
                     />
                   </svg>
                   <span class="ml-3 text-base font-medium text-gray-900">
-                    Analytics
+                    Movie
                   </span>
                 </a>
 
@@ -289,7 +289,7 @@
                     @click="toggleNestedMobileMenu()"
                     class="ml-3 relative text-base font-medium text-gray-900"
                   >
-                    Automations
+                    Watch List
                   </span>
                 </a>
                 <transition
