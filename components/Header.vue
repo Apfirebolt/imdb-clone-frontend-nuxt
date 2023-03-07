@@ -238,6 +238,7 @@
                 </button>
               </div>
             </div>
+            
             <div class="mt-6">
               <nav class="grid gap-y-8">
                 <a
@@ -348,6 +349,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "Header",
   data() {
@@ -357,7 +359,15 @@ export default {
       nestedMobileMenu: false,
     };
   },
+  computed: {
+    ...mapGetters({
+      getToken: "auth/getToken"
+    })
+  },
   methods: {
+    ...mapActions({
+      logoutAction: "auth/logOutAction"
+    }),
     openNestedMenu() {
       this.isNestedMenuOpened = !this.isNestedMenuOpened;
     },
@@ -367,6 +377,9 @@ export default {
     toggleNestedMobileMenu() {
       this.nestedMobileMenu = !this.nestedMobileMenu;
     },
+    logoutAction() {
+      this.logoutAction();
+    }
   },
 };
 </script>

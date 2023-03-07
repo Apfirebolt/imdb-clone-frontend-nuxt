@@ -4,6 +4,8 @@
 
 I wanted to learn more about server side rendering and Nuxt JS. I went through docs of Nuxt JS, a few crash courses and wanted to test my skills with a project. Hence, this came into existence.
 
+This project uses this API built in Express :- https://github.com/Apfirebolt/open-movie-database
+
 ## Technologies Used
 
 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
@@ -37,6 +39,22 @@ $ npm run generate
 ```
 
 For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
+
+## Screenshots
+
+Please find some of the screenshots of the application. Below is the screenshot of the Register Page. Tailwind CSS components from TailwindUI is used to create this.
+
+![alt text](./screenshots/register.PNG)
+
+Movie page which shows searched movie data. Data is being fetched from the Open movie database which requires key for authentication. 
+
+![alt text](./screenshots/movie.PNG)
+
+Another screenshot of the movie page shows the saved movies which are stored in the database.
+
+![alt text](./screenshots/movie2.PNG)
+
+Below are some of the details related to NUXT JS, a popular SSR framework built on top of Vue JS.
 
 ## Special Directories
 
