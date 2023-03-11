@@ -15,9 +15,12 @@ export default {
     this.$axios
       .post(url, payload, config)
       .then((response) => {
+        this.$toast.success("Watch list added successfully!").goAway(1500);
         dispatch('getAllPlaylistAction')
       })
-      .catch((err) => {});
+      .catch((err) => {
+        this.$toast.error("Some error occurred!").goAway(1500);
+      });
   },
 
   getAllPlaylistAction: function ({ commit }) {
@@ -51,10 +54,12 @@ export default {
     this.$axios
       .delete(url, config)
       .then((response) => {
+        this.$toast.success("Playlist deleted successfully!").goAway(1500);
         dispatch('getAllPlaylistAction')
       })
       .catch((err) => {
         console.error(err);
+        this.$toast.error("Some error occurred!").goAway(1500);
       });
   },
 
@@ -70,10 +75,12 @@ export default {
     this.$axios
       .put(url, payload, config)
       .then((response) => {
+        this.$toast.success("Playlist updated successfully!").goAway(1500);
         dispatch('getAllPlaylistAction')
       })
       .catch((err) => {
         console.error(err);
+        this.$toast.error("Some error occurred!").goAway(1500);
       });
   },
 
@@ -89,10 +96,12 @@ export default {
     this.$axios
       .patch(url, payload, config)
       .then((response) => {
+        this.$toast.success("Movie added to watch list successfully!").goAway(1500);
         dispatch('getAllPlaylistAction')
       })
       .catch((err) => {
         console.error(err);
+        this.$toast.error("Some error occurred!").goAway(1500);
       });
   },
 };

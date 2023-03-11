@@ -359,6 +359,9 @@ export default {
       nestedMobileMenu: false,
     };
   },
+  mounted() {
+    console.log('Login token ', this.getToken)
+  },
   computed: {
     ...mapGetters({
       getToken: "auth/getToken"

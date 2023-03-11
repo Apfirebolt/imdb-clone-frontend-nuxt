@@ -14,10 +14,11 @@ export default {
     this.$axios
       .get(url, config)
       .then((response) => {
-        console.log('Response is ', response)
         commit("setAllMovies", response.data)
       })
-      .catch((err) => {});
+      .catch((err) => {
+        this.$toast.error("Some error occurred!").goAway(1500);
+      });
   },
   saveMovieAction: function ({ commit, dispatch }, payload) {
     const url = 'movie'
@@ -31,9 +32,12 @@ export default {
     this.$axios
       .post(url, payload, config)
       .then((response) => {
+        this.$toast.success("Movie was successfully added!").goAway(1500);
         dispatch('getAllMoviesAction')
       })
-      .catch((err) => {});
+      .catch((err) => {
+        this.$toast.error("Some error occurred!").goAway(1500);
+      });
   },
   deleteMovieAction: function ({ commit, dispatch }, payload) {
     const url = `movie/${payload._id}`;
@@ -47,9 +51,11 @@ export default {
     this.$axios
       .delete(url, config)
       .then((response) => {
+        this.$toast.success("Movie was successfully deleted!").goAway(1500);
         dispatch('getAllMoviesAction')
       })
       .catch((err) => {
+        this.$toast.error("Some error occurred!").goAway(1500);
         console.error(err);
       });
   },

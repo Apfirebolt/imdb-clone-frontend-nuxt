@@ -1,6 +1,6 @@
 <template>
   <div class="py-12 text-center px-4 sm:px-6 lg:px-8">
-    <p class="text-center text-3xl text-red-500">Add Watchlist Page</p>
+    <p class="ml-3 p-3 text-left bg-gray-600 text-3xl text-gray-100 shadow-lg">Add Watchlist</p>
     <t-modal v-model="isWatchListModalOpened" header="Create Watchlist">
       <AddEditWatchlist :addPlaylist="addNewPlaylist"/>
     </t-modal>

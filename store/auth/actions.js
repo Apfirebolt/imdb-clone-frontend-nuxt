@@ -1,11 +1,14 @@
 export default {
-  
   registerUser: function ({ commit }, payload) {
     const url = "auth/register";
     this.$axios
       .post(url, payload)
-      .then((response) => {})
-      .catch((err) => {});
+      .then((response) => {
+        this.$toast.success("Successfully registered, please login to continue!").goAway(1500);
+      })
+      .catch((err) => {
+        this.$toast.error("Some error occurred!").goAway(1500);
+      });
   },
 
   setTokenAction: function ({ commit }, payload) {
@@ -16,10 +19,12 @@ export default {
         commit("setToken", response.data.token);
         localStorage.setItem("Token", response.data.token);
         localStorage.setItem("userId", response.data._id);
+        this.$toast.success("Logged in successfully!").goAway(1500);
         this.$router.push({ name: "movie" });
       })
       .catch((err) => {
         console.log(err);
+        this.$toast.error("Some error occurred!").goAway(1500);
       });
   },
 
@@ -33,8 +38,10 @@ export default {
       });
       localStorage.removeItem("Token");
       localStorage.removeItem("userId");
+      this.$toast.success("Logged out successfully!").goAway(1500);
     } catch (err) {
       console.error(err);
+      this.$toast.error("Some error occurred!").goAway(1500);
     }
     router.push({ name: "Login" });
   },
