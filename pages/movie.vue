@@ -224,7 +224,6 @@ export default {
       this.isConfirmModalOpened = false
     },
     addToPlaylistUtil(movie) {
-      console.log('Movie is ', movie)
       this.getAllPlaylistAction()
       this.selectedMovie = movie
       this.isAddToPlaylistModalOpened = true

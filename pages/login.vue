@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      loginAction: "auth/setTokenAction"
+      loginAction: "auth/setTokenAction",
     }),
     loginUtil() {
       this.loginAction(this.formData)

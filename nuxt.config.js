@@ -21,7 +21,7 @@ export default {
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~/plugins/vue-tailwind.js'],
+  plugins: ['~/plugins/vue-tailwind.js', '~/plugins/route'],
 
   publicRuntimeConfig: {
     axios: {

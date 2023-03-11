@@ -11,7 +11,7 @@ export default {
       });
   },
 
-  setTokenAction: function ({ commit }, payload) {
+  setTokenAction: function ({ commit, dispatch }, payload) {
     const url = "auth/login";
     this.$axios
       .post(url, payload)
@@ -22,6 +22,9 @@ export default {
         this.$toast.success("Logged in successfully!").goAway(1500);
         this.$router.push({ name: "movie" });
       })
+      .then(() => {
+        dispatch('getProfileDataAction');
+      })
       .catch((err) => {
         console.log(err);
         this.$toast.error("Some error occurred!").goAway(1500);
@@ -29,13 +32,9 @@ export default {
   },
 
   // Log out functionality
-  logOutAction: ({ commit }) => {
-    commit(types.LOG_OUT_SUCCESS);
+  logOutAction: function ({ commit }) {
+    commit("setLogOutSuccess");
     try {
-      events.emit("add_toast", {
-        content: "Logged out successfully",
-        type: "success",
-      });
       localStorage.removeItem("Token");
       localStorage.removeItem("userId");
       this.$toast.success("Logged out successfully!").goAway(1500);
@@ -43,7 +42,7 @@ export default {
       console.error(err);
       this.$toast.error("Some error occurred!").goAway(1500);
     }
-    router.push({ name: "Login" });
+    this.$router.push({ name: "login" });
   },
 
   checkUserAuthentication: ({ commit }) => {
@@ -57,12 +56,19 @@ export default {
     }
   },
 
-  getProfileDataAction: ({ commit }) => {
-    const url = "users/profile";
-    interceptor
-      .get(url)
+  getProfileDataAction: function ({ commit }) {
+    const url = "auth/profile";
+    let token = localStorage.getItem("Token");
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    }
+    this.$axios
+      .get(url, config)
       .then((response) => {
-        commit(types.SET_PROFILE_DATA, response);
+        commit("setProfileData", response);
       })
       .catch((err) => {
         console.error(err);

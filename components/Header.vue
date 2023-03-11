@@ -166,7 +166,10 @@
             Home
           </NuxtLink>
         </nav>
-        <div class="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
+        <div v-if="profileData" class="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
+          <button @click="logOutUtil" class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">Log Out</button>
+        </div>
+        <div v-else class="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
           <NuxtLink to="/login" 
             class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
           >Sign In</NuxtLink>
@@ -177,7 +180,7 @@
         </div>
       </div>
     </div>
-
+  
     <!--
     Mobile menu, show/hide based on mobile menu state.
 
@@ -360,16 +363,20 @@ export default {
     };
   },
   mounted() {
-    console.log('Login token ', this.getToken)
+    // If token is not available in store, use token available in local storage and authenticate
+    if (!this.profileData) {
+      this.getUserProfile()
+    }
   },
   computed: {
     ...mapGetters({
-      getToken: "auth/getToken"
+      profileData: "auth/getProfileData"
     })
   },
   methods: {
     ...mapActions({
-      logoutAction: "auth/logOutAction"
+      logoutAction: "auth/logOutAction",
+      getUserProfile: "auth/getProfileDataAction"
     }),
     openNestedMenu() {
       this.isNestedMenuOpened = !this.isNestedMenuOpened;
@@ -380,7 +387,7 @@ export default {
     toggleNestedMobileMenu() {
       this.nestedMobileMenu = !this.nestedMobileMenu;
     },
-    logoutAction() {
+    logOutUtil() {
       this.logoutAction();
     }
   },
