@@ -5,7 +5,7 @@ export default ({ app }) => {
         if (typeof window !== 'undefined') {
             let storedToken = localStorage.getItem('Token')
             
-            console.log('Checking global router..', storedToken)
+            // Some function here
         }
         
     })

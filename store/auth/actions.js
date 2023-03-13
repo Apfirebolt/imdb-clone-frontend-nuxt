@@ -5,6 +5,7 @@ export default {
       .post(url, payload)
       .then((response) => {
         this.$toast.success("Successfully registered, please login to continue!").goAway(1500);
+        this.$router.push({ name: "login" });
       })
       .catch((err) => {
         this.$toast.error("Some error occurred!").goAway(1500);
